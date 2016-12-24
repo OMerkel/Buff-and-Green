@@ -29,7 +29,7 @@ moves left.
 
 Draw situations might occur.
 
-##Game Mechanics
+### Game Mechanics
 
 Players' turns alternate between players. The player controlling
 dark checkers moves first in Buff and Green. A player either
@@ -38,6 +38,17 @@ dark checkers moves first in Buff and Green. A player either
 * must perform a normal non-capturing move otherwise.
 
 Passing a turn is not allowed.
+
+## Testing
+
+### Running Tests
+
+Tests can be started by visiting https://omerkel.github.io/Buff-and-Green/html5/test/test_buffngreen.html
+
+The tests cover behavior of
+
+* the board representing the data model of Buff and Green.
+* the move generator finding valid moves for a board situation according to the implemented rules.
 
 ## 3rd Party Libraries
 
