@@ -5,7 +5,7 @@
  *
  * @section LICENSE
  *
- * Copyright (c) 2016 Oliver Merkel <Merkel(dot)Oliver(at)web(dot)de>
+ * Copyright (c) 2017 Oliver Merkel <Merkel(dot)Oliver(at)web(dot)de>
  * All rights reserved.
  *
  * Released under the MIT license.
@@ -230,6 +230,7 @@ Board.WHITE = 'white';
 Board.COLOR = [ Board.RED, Board.WHITE ];
 Board.CHECKER = 'checker';
 Board.KING = 'king';
+Board.DIRECTION = [ 'nw', 'ne', 'sw', 'se' ];
 
 function Board() {}
 
@@ -319,6 +320,7 @@ Board.prototype.generateRedMoves = function() {
   var move = [], capture = [];
   for(var pos=1; pos<=32; ++pos) {
     if ( this.isColorPiece( Board.RED, Board.CHECKER, pos ) ) {
+      this.generateRedCapture( capture, pos );
       if ( pos < 29 && 0 == capture.length ) {
         if ( Board.DIAGONALS[pos].nw.length > 0 ) {
           if ( this.isEmptySquare( Board.DIAGONALS[pos].nw[0] ) ) {
@@ -333,7 +335,19 @@ Board.prototype.generateRedMoves = function() {
           }
         }
       }
-      this.generateRedCapture( capture, pos );
+    }
+    else if ( this.isColorPiece( Board.RED, Board.KING, pos ) ) {
+      if ( 0 == capture.length ) {
+        for(var d=0; d<4; ++d) {
+          direction = Board.DIRECTION[d];
+          if ( Board.DIAGONALS[pos][direction].length > 0 ) {
+            for (var i=0; i<Board.DIAGONALS[pos][direction].length && this.isEmptySquare( Board.DIAGONALS[pos][direction][i] ); ++i) {
+              move[move.length] = { piece: 'king',
+                from: pos, to: Board.DIAGONALS[pos][direction][i] };
+            }
+          }
+        }
+      }
     }
   }
   return 0 == capture.length ? move : capture;
@@ -386,6 +400,7 @@ Board.prototype.generateWhiteMoves = function() {
   var move = [], capture = [];
   for(var pos=1; pos<=32; ++pos) {
     if ( this.isColorPiece( Board.WHITE, Board.CHECKER, pos ) ) {
+      this.generateWhiteCapture( capture, pos );
       if ( pos > 4 && 0 == capture.length ) {
         if ( Board.DIAGONALS[pos].sw.length > 0 ) {
           if ( this.isEmptySquare( Board.DIAGONALS[pos].sw[0] ) ) {
@@ -400,7 +415,19 @@ Board.prototype.generateWhiteMoves = function() {
           }
         }
       }
-      this.generateWhiteCapture( capture, pos );
+    }
+    else if ( this.isColorPiece( Board.WHITE, Board.KING, pos ) ) {
+      if ( 0 == capture.length ) {
+        for(var d=0; d<4; ++d) {
+          direction = Board.DIRECTION[d];
+          if ( Board.DIAGONALS[pos][direction].length > 0 ) {
+            for (var i=0; i<Board.DIAGONALS[pos][direction].length && this.isEmptySquare( Board.DIAGONALS[pos][direction][i] ); ++i) {
+              move[move.length] = { piece: 'king',
+                from: pos, to: Board.DIAGONALS[pos][direction][i] };
+            }
+          }
+        }
+      }
     }
   }
   return 0 == capture.length ? move : capture;

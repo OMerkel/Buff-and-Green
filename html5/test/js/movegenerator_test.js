@@ -232,3 +232,208 @@ QUnit.test( "Capture backwards and forwards for red checker.", function( assert 
   ];
   assert.propEqual( actual, expected, "Passed!" );
 });
+
+QUnit.test( "Normal moves for red king.", function( assert ) {
+  var boardString =
+    ' # # # w' +
+    '# # # # ' +
+    ' # R # #' +
+    '# # # # ' +
+    ' # # # #' +
+    '# # # # ' +
+    ' # # # #' +
+    '# # # # ';
+  var bitBoard = Board.boardString2bitBoard(boardString);
+  var RED = 0, WHITE = 1;
+  var board = new Board();
+  board.set( bitBoard, RED );
+  var actual = board.getActions();
+  var expected = [
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 27
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 32
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 26
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 30
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 19
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 16
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 12
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 18
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 14
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 9
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 5
+    }
+  ];
+  assert.propEqual( actual, expected, "Passed!" );
+});
+
+QUnit.test( "Normal moves for white king.", function( assert ) {
+  var boardString =
+    ' # # # R' +
+    '# # # # ' +
+    ' # W # #' +
+    '# # # # ' +
+    ' # # r #' +
+    '# # # r ' +
+    ' # # # #' +
+    '# # # # ';
+  var bitBoard = Board.boardString2bitBoard(boardString);
+  var RED = 0, WHITE = 1;
+  var board = new Board();
+  board.set( bitBoard, WHITE );
+  var actual = board.getActions();
+  var expected = [
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 27
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 32
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 26
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 30
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 19
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 16
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 12
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 18
+    }
+  ];
+  assert.propEqual( actual, expected, "Passed!" );
+});
+
+QUnit.test( "Normal moves for two white kings.", function( assert ) {
+  var boardString =
+    ' # # # R' +
+    '# W # # ' +
+    ' # W # #' +
+    '# # # # ' +
+    ' # # r #' +
+    '# # # r ' +
+    ' # # # #' +
+    '# # # # ';
+  var bitBoard = Board.boardString2bitBoard(boardString);
+  var RED = 0, WHITE = 1;
+  var board = new Board();
+  board.set( bitBoard, WHITE );
+  var actual = board.getActions();
+  var expected = [
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 26
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 30
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 19
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 16
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 12
+    },
+    {
+      "from": 23,
+      "piece": "king",
+      "to": 18
+    },
+    {
+      "from": 27,
+      "piece": "king",
+      "to": 32
+    },
+    {
+      "from": 27,
+      "piece": "king",
+      "to": 31
+    },
+    {
+      "from": 27,
+      "piece": "king",
+      "to": 24
+    },
+    {
+      "from": 27,
+      "piece": "king",
+      "to": 20
+    }
+  ];
+  assert.propEqual( actual, expected, "Passed!" );
+});
