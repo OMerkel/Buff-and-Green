@@ -437,3 +437,103 @@ QUnit.test( "Normal moves for two white kings.", function( assert ) {
   ];
   assert.propEqual( actual, expected, "Passed!" );
 });
+
+QUnit.test( "Captures for white kings.", function( assert ) {
+  var boardString =
+    ' # # # #' +
+    '# r # R ' +
+    ' W W R #' +
+    '# # W # ' +
+    ' r # R #' +
+    '# # # # ' +
+    ' # # r #' +
+    'r # # # ';
+  var bitBoard = Board.boardString2bitBoard(boardString);
+  var RED = 0, WHITE = 1;
+  var board = new Board();
+  board.set( bitBoard, WHITE );
+  var actual = board.getActions();
+  var expected = [
+    {
+      "capture": 14,
+      "from": 18,
+      "piece": "king",
+      "to": 9
+    },
+    {
+      "capture": 14,
+      "from": 18,
+      "piece": "king",
+      "to": 5
+    },
+    {
+      "capture": 27,
+      "from": 23,
+      "piece": "king",
+      "to": 32
+    },
+    {
+      "capture": 16,
+      "from": 23,
+      "piece": "king",
+      "to": 12
+    },
+    {
+      "capture": 27,
+      "from": 24,
+      "piece": "king",
+      "to": 31
+    },
+    {
+      "capture": 6,
+      "from": 24,
+      "piece": "king",
+      "to": 1
+    }
+  ];
+  assert.propEqual( actual, expected, "Passed!" );
+});
+
+QUnit.test( "Captures for red kings.", function( assert ) {
+  var boardString =
+    ' # # # #' +
+    '# r # R ' +
+    ' W W R #' +
+    '# # W # ' +
+    ' r # R #' +
+    '# # # # ' +
+    ' # # r #' +
+    'r # # # ';
+  var bitBoard = Board.boardString2bitBoard(boardString);
+  var RED = 0, WHITE = 1;
+  var board = new Board();
+  board.set( bitBoard, RED );
+  var actual = board.getActions();
+  var expected = [
+    {
+      "capture": 18,
+      "from": 22,
+      "piece": "king",
+      "to": 15
+    },
+    {
+      "capture": 18,
+      "from": 22,
+      "piece": "king",
+      "to": 11
+    },
+    {
+      "capture": 18,
+      "from": 22,
+      "piece": "king",
+      "to": 8
+    },
+    {
+      "capture": 24,
+      "from": 27,
+      "piece": "checker",
+      "to": 20
+    }
+  ];
+  assert.propEqual( actual, expected, "Passed!" );
+});
