@@ -537,3 +537,143 @@ QUnit.test( "Captures for red kings.", function( assert ) {
   ];
   assert.propEqual( actual, expected, "Passed!" );
 });
+
+QUnit.test( "Consecutive captures for red king.", function( assert ) {
+  var boardString =
+    ' R # # #' +
+    '# W # r ' +
+    ' # # # #' +
+    '# # # # ' +
+    ' r # W #' +
+    '# # # # ' +
+    ' # # w #' +
+    '# # # # ';
+  var bitBoard = Board.boardString2bitBoard(boardString);
+  var RED = 0, WHITE = 1;
+  var board = new Board();
+  board.set( bitBoard, RED );
+  var actual = board.getActions();
+  var expected = [
+    {
+      "capture": 27,
+      "from": 32,
+      "piece": "king",
+      "to": 23
+    },
+    {
+      "capture": 27,
+      "from": 32,
+      "piece": "king",
+      "to": 18
+    }
+  ];
+  assert.propEqual( actual, expected, "Found two possible capture moves!" );
+  board.doAction(actual[1]);
+  var state = board.getState();
+  expected = RED;
+  assert.equal( state.turn, expected, 'Red player\'s turn.');
+  var actual = board.getActions();
+  var expected = [
+    {
+      "capture": 14,
+      "from": 18,
+      "piece": "king",
+      "to": 9
+    },
+    {
+      "capture": 14,
+      "from": 18,
+      "piece": "king",
+      "to": 5
+    }
+  ];
+  assert.propEqual( actual, expected, "Found two possible capture moves!" );
+  board.doAction(actual[0]);
+  var state = board.getState();
+  expected = RED;
+  assert.equal( state.turn, expected, 'Red player\'s turn.');
+  var actual = board.getActions();
+  var expected = [
+    {
+      "capture": 6,
+      "from": 9,
+      "piece": "king",
+      "to": 2
+    }
+  ];
+  assert.propEqual( actual, expected, "Found remaining capture move!" );
+  board.doAction(actual[0]);
+  var state = board.getState();
+  expected = WHITE;
+  assert.equal( state.turn, expected, 'White player\'s turn.');
+});
+
+QUnit.test( "Consecutive captures for white king.", function( assert ) {
+  var boardString =
+    ' W # # #' +
+    '# R # w ' +
+    ' # # # #' +
+    '# # # # ' +
+    ' w # R #' +
+    '# # # # ' +
+    ' # # r #' +
+    '# # # # ';
+  var bitBoard = Board.boardString2bitBoard(boardString);
+  var RED = 0, WHITE = 1;
+  var board = new Board();
+  board.set( bitBoard, WHITE );
+  var actual = board.getActions();
+  var expected = [
+    {
+      "capture": 27,
+      "from": 32,
+      "piece": "king",
+      "to": 23
+    },
+    {
+      "capture": 27,
+      "from": 32,
+      "piece": "king",
+      "to": 18
+    }
+  ];
+  assert.propEqual( actual, expected, "Found two possible capture moves!" );
+  board.doAction(actual[1]);
+  var state = board.getState();
+  expected = WHITE;
+  assert.equal( state.turn, expected, 'White player\'s turn.');
+  var actual = board.getActions();
+  var expected = [
+    {
+      "capture": 14,
+      "from": 18,
+      "piece": "king",
+      "to": 9
+    },
+    {
+      "capture": 14,
+      "from": 18,
+      "piece": "king",
+      "to": 5
+    }
+  ];
+  assert.propEqual( actual, expected, "Found two possible capture moves!" );
+  board.doAction(actual[0]);
+  var state = board.getState();
+  expected = WHITE;
+  assert.equal( state.turn, expected, 'White player\'s turn.');
+  var actual = board.getActions();
+  var expected = [
+    {
+      "capture": 6,
+      "from": 9,
+      "piece": "king",
+      "to": 2
+    }
+  ];
+  assert.propEqual( actual, expected, "Found remaining capture move!" );
+  board.doAction(actual[0]);
+  var state = board.getState();
+  expected = RED;
+  assert.equal( state.turn, expected, 'Red player\'s turn.');
+});

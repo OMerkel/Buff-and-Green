@@ -264,12 +264,18 @@ Board.prototype.getActions = function() {
 };
 
 Board.prototype.generateCapture = function( pos ) {
-  var capture = [];
+  var capture = [], move = [];
   if ( this.isColorPiece( Board.RED, Board.CHECKER, pos ) ) {
     this.generateRedCaptureChecker( capture, pos );
   }
-  if ( this.isColorPiece( Board.WHITE, Board.CHECKER, pos ) ) {
+  else if ( this.isColorPiece( Board.WHITE, Board.CHECKER, pos ) ) {
     this.generateWhiteCaptureChecker( capture, pos );
+  }
+  else if ( this.isColorPiece( Board.RED, Board.KING, pos ) ) {
+    this.generateRedActionsKing( capture, move, pos );
+  }
+  else if ( this.isColorPiece( Board.WHITE, Board.KING, pos ) ) {
+    this.generateWhiteActionsKing( capture, move, pos );
   }
   return capture;
 }
@@ -316,6 +322,38 @@ Board.prototype.generateRedCaptureChecker = function( capture, pos ) {
   }
 };
 
+Board.prototype.generateRedActionsKing = function( capture, move, pos ) {
+  for(var d=0; d<4; ++d) {
+    direction = Board.DIRECTION[d];
+    if ( Board.DIAGONALS[pos][direction].length > 0 ) {
+      var obstacles = 0;
+      var obstacleToCapture = 0;
+      var skip = false;
+      for (var i=0; i<Board.DIAGONALS[pos][direction].length && obstacles < 2 && !skip; ++i) {
+        if (this.isEmptySquare( Board.DIAGONALS[pos][direction][i] )) {
+          if (obstacles < 1) {
+            move[move.length] = { piece: 'king',
+              from: pos, to: Board.DIAGONALS[pos][direction][i] };
+          }
+          else {
+            capture[capture.length] = {
+              piece: 'king', capture: obstacleToCapture,
+              from: pos, to: Board.DIAGONALS[pos][direction][i]
+            };
+          }
+        }
+        else if (this.isColor( Board.WHITE, Board.DIAGONALS[pos][direction][i] )){
+          ++obstacles;
+          obstacleToCapture = Board.DIAGONALS[pos][direction][i];
+        }
+        else {
+          skip = true;
+        }
+      }
+    }
+  }
+};
+
 Board.prototype.generateRedMoves = function() {
   var move = [], capture = [];
   for(var pos=1; pos<=32; ++pos) {
@@ -337,35 +375,7 @@ Board.prototype.generateRedMoves = function() {
       }
     }
     else if ( this.isColorPiece( Board.RED, Board.KING, pos ) ) {
-      for(var d=0; d<4; ++d) {
-        direction = Board.DIRECTION[d];
-        if ( Board.DIAGONALS[pos][direction].length > 0 ) {
-          var obstacles = 0;
-          var obstacleToCapture = 0;
-          var skip = false;
-          for (var i=0; i<Board.DIAGONALS[pos][direction].length && obstacles < 2 && !skip; ++i) {
-            if (this.isEmptySquare( Board.DIAGONALS[pos][direction][i] )) {
-              if (obstacles < 1) {
-                move[move.length] = { piece: 'king',
-                  from: pos, to: Board.DIAGONALS[pos][direction][i] };
-              }
-              else {
-                capture[capture.length] = {
-                  piece: 'king', capture: obstacleToCapture,
-                  from: pos, to: Board.DIAGONALS[pos][direction][i]
-                };
-              }
-            }
-            else if (this.isColor( Board.WHITE, Board.DIAGONALS[pos][direction][i] )){
-              ++obstacles;
-              obstacleToCapture = Board.DIAGONALS[pos][direction][i];
-            }
-            else {
-              skip = true;
-            }
-          }
-        }
-      }
+      this.generateRedActionsKing( capture, move, pos );
     }
   }
   return 0 == capture.length ? move : capture;
@@ -414,6 +424,38 @@ Board.prototype.generateWhiteCaptureChecker = function( capture, pos ) {
   }
 };
 
+Board.prototype.generateWhiteActionsKing = function( capture, move, pos ) {
+  for(var d=0; d<4; ++d) {
+    direction = Board.DIRECTION[d];
+    if ( Board.DIAGONALS[pos][direction].length > 0 ) {
+      var obstacles = 0;
+      var obstacleToCapture = 0;
+      var skip = false;
+      for (var i=0; i<Board.DIAGONALS[pos][direction].length && obstacles < 2 && !skip; ++i) {
+        if (this.isEmptySquare( Board.DIAGONALS[pos][direction][i] )) {
+          if (obstacles < 1) {
+            move[move.length] = { piece: 'king',
+              from: pos, to: Board.DIAGONALS[pos][direction][i] };
+          }
+          else {
+            capture[capture.length] = {
+              piece: 'king', capture: obstacleToCapture,
+              from: pos, to: Board.DIAGONALS[pos][direction][i]
+            };
+          }
+        }
+        else if (this.isColor( Board.RED, Board.DIAGONALS[pos][direction][i] )){
+          ++obstacles;
+          obstacleToCapture = Board.DIAGONALS[pos][direction][i];
+        }
+        else {
+          skip = true;
+        }
+      }
+    }
+  }
+};
+
 Board.prototype.generateWhiteMoves = function() {
   var move = [], capture = [];
   for(var pos=1; pos<=32; ++pos) {
@@ -435,36 +477,7 @@ Board.prototype.generateWhiteMoves = function() {
       }
     }
     else if ( this.isColorPiece( Board.WHITE, Board.KING, pos ) ) {
-      for(var d=0; d<4; ++d) {
-        direction = Board.DIRECTION[d];
-        if ( Board.DIAGONALS[pos][direction].length > 0 ) {
-          var obstacles = 0;
-          var obstacleToCapture = 0;
-          var skip = false;
-          for (var i=0; i<Board.DIAGONALS[pos][direction].length && obstacles < 2 && !skip; ++i) {
-            if (this.isEmptySquare( Board.DIAGONALS[pos][direction][i] )) {
-              if (obstacles < 1) {
-                move[move.length] = { piece: 'king',
-                  from: pos, to: Board.DIAGONALS[pos][direction][i] };
-              }
-              else {
-                // captures
-                capture[capture.length] = {
-                  piece: 'king', capture: obstacleToCapture,
-                  from: pos, to: Board.DIAGONALS[pos][direction][i]
-                };
-              }
-            }
-            else if (this.isColor( Board.RED, Board.DIAGONALS[pos][direction][i] )){
-              ++obstacles;
-              obstacleToCapture = Board.DIAGONALS[pos][direction][i];
-            }
-            else {
-              skip = true;
-            }
-          }
-        }
-      }
+      this.generateWhiteActionsKing( capture, move, pos );
     }
   }
   return 0 == capture.length ? move : capture;
