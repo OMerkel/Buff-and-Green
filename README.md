@@ -39,6 +39,51 @@ dark checkers moves first in Buff and Green. A player either
 
 Passing a turn is not allowed.
 
+### Non-capturing Move
+
+A Checker's non-capturing move is performed by moving the checker in
+diagonally forward direction onto a free adjacent board position.
+A non-capturing move of a Checker is not allowed in diagonally
+backwards direction.
+
+Kings move by performing long jumps. A King moves in any diagonally
+forward and diagonally backward direction in straight line passing any
+amount of free board positions. A King's move ends on such a free
+board position then.
+
+### Promotion
+
+A checker reaching the base row of the opponent on the far side
+of the game board by a non-capturing move it is promoted to king status.
+
+If a checker is reaching this far side of the game board by performing
+a capture and is still able to consecutively capture as a checker
+it must perform the capture without being promoted to king.
+
+### Capturing
+
+Capturing is mandatory. A checker of your color captures an
+opponent's game piece being adjacent to your checker by jumping
+directly behind it onto a free adjacent board position in straight
+line diagonally.
+
+Capturing is allowed in any valid diagonally forward and diagonally backward
+direction. Only a single opponent's game piece can be captured at a time.
+
+The captured opponent's checker or king is removed immediately while the capture
+takes place.
+
+If the capturing game piece is able to consecutively perform further
+capturing from it's target board position the player must continue
+to capture with this game piece.
+
+Kings perform long jump captures. ...
+
+On availability of multiple consecutive capturing paths on a player's
+turn it is not necessary to capture on the longest capturing path. The player
+can freely choose among given capturing paths but still has to continue capturing
+until no further capture is available on a path.
+
 ## Testing
 
 ### Running Tests

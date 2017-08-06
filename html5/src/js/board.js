@@ -534,6 +534,17 @@ Board.prototype.nextPlayer = function() {
   this.active = 1 - this.active;
 };
 
+Board.prototype.getResult = function () {
+  var actionsAmount = this.getActions().length;
+  return actionsAmount > 0 ? [ 0.01, 0.01 ] :
+    [[ 1, 0 ], [ 0, 1 ]][this.active];
+};
+
+Board.prototype.repr = function() {
+  console.log('Active player: ' + Board.COLOR[this.active]);
+  /* TODO */
+};
+
 Board.prototype.getState = function() {
   var board = '';
   for(var pos=1; pos<=32; ++pos) {
