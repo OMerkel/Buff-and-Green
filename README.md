@@ -1,23 +1,30 @@
-# Buff-and-Green
+# Buff and Green
+
+[![Language: JavaScript](https://img.shields.io/badge/Language-JavaScript-F7DF1E?logo=javascript&logoColor=000)](https://developer.mozilla.org/docs/Web/JavaScript)
+[![UI: HTML5](https://img.shields.io/badge/UI-HTML5-E34F26?logo=html5&logoColor=fff)](https://developer.mozilla.org/docs/Web/HTML)
+[![Style: CSS3](https://img.shields.io/badge/Style-CSS3-1572B6?logo=css3&logoColor=fff)](https://developer.mozilla.org/docs/Web/CSS)
+[![Concurrency: Web Worker](https://img.shields.io/badge/Concurrency-Web%20Worker-0A66C2)](https://developer.mozilla.org/docs/Web/API/Web_Workers_API)
+[![Tests: Vitest](https://img.shields.io/badge/Tests-Vitest-6E9F18?logo=vitest&logoColor=fff)](https://vitest.dev)
+[![E2E: Playwright](https://img.shields.io/badge/E2E-Playwright-2EAD33?logo=playwright&logoColor=fff)](https://playwright.dev)
+[![AI: MCTS/UCT](https://img.shields.io/badge/AI-MCTS%2FUCT-5B4B8A)](javascript/html5/src/doc/engine_mcts_ucb.md)
+[![Coverage: >90%](https://img.shields.io/badge/Coverage-%3E90%25-brightgreen)](javascript/html5/src/README.md#testing)
 
 ## Abstract
 
 _Buff and Green_ is an implementation of a game also known as Checkers,
-Draughts, Dama, Damas, Dame. If the name _Buff and Green_ is used then
-this specific implementation is meant. The other names are used here
-to refer to the game in more general scope. Like when discussing
+Draughts, Dama, Damas, Dame. These other names besides _Buff and Green_
+are used here to refer to the game in more general scope. Like when discussing
 specific rule variants or if the whole family of Checkers games is meant.
 The _family of Checkers games_ is played on rectangular game boards
 and game pieces called _checkers_. These are placed and moved on squares
 representing the game board. Checkers claims to be a successor of
 [Alquerque](https://github.com/OMerkel/Alquerque).
+
 Alquerque is a medieval Spanish board game. Both, Checkers and Alquerque,
 are 2-player, abstract, strategic, perfect information,
-traditional board games. Due to the variants and differences in
-applied rules in the family of Checkers games the rules for
-Buff and Green are discussed and selected from the given variety.
+traditional board games.
 
-## Rules
+## Rules in Buff and Green
 
 ### Objective of the game
 
@@ -29,10 +36,20 @@ moves left.
 
 Draw situations might occur.
 
+The draw clock reaches a draw after 80 half-moves (or 40 full moves)
+without a capture and without a promotion. A _half-move_ is called a
+_ply_, too.
+
+This is defined by the `DRAW_HALF_MOVES` constant in `board.js`:
+
+```javascript
+const DRAW_HALF_MOVES = 80;
+```
+
 ### Game Mechanics
 
 Players' turns alternate between players. The player controlling
-dark checkers moves first in Buff and Green. A player either
+red checkers (dark checkers) moves first in Buff and Green. A player either
 
 * must capture opponent’s pieces if possible or
 * must perform a normal non-capturing move otherwise.
@@ -46,15 +63,16 @@ diagonally forward direction onto a free adjacent board position.
 A non-capturing move of a Checker is not allowed in diagonally
 backwards direction.
 
-Kings move by performing long jumps. A King moves in any diagonally
-forward and diagonally backward direction in straight line passing any
-amount of free board positions. A King's move ends on such a free
-board position then.
+Per default Kings move by performing long jumps. A King moves in any diagonally
+forward and diagonally backward direction in a straight line across any
+amount of free board positions. A King's move ends on one of those free
+board positions. If the option is switched off, Kings move only to an
+adjacent free square in any diagonal direction.
 
 ### Promotion
 
 A checker reaching the base row of the opponent on the far side
-of the game board by a non-capturing move it is promoted to king status.
+of the game board is promoted to King status.
 
 If a checker is reaching this far side of the game board by performing
 a capture and is still able to consecutively capture as a checker
@@ -67,17 +85,28 @@ opponent's game piece being adjacent to your checker by jumping
 directly behind it onto a free adjacent board position in straight
 line diagonally.
 
-Capturing is allowed in any valid diagonally forward and diagonally backward
-direction. Only a single opponent's game piece can be captured at a time.
+Per default, normal unpromoted Checkers may capture in any valid diagonally
+forward and diagonally backward direction. If the backward-capture option is
+switched off, normal unpromoted Checkers may capture only in diagonally
+forward direction.
+
+Only a single opponent's game piece can be captured at a time. Meaning you
+can't jump over two or more adjacent opponent's game pieces to capture these
+at once.
 
 The captured opponent's checker or king is removed immediately while the capture
-takes place.
+takes place. Thus in multi-jumps such a checker of king is not available to be
+jumped more than once. It's already removed.
 
 If the capturing game piece is able to consecutively perform further
 capturing from it's target board position the player must continue
 to capture with this game piece.
 
-Kings perform long jump captures. ...
+Per default Kings perform long jump captures. A King may travel across empty
+diagonal squares until reaching the first opponent piece on that line and, if
+the square directly behind it is free, captures by landing on that adjacent
+square. If the option is switched off, Kings capture only by jumping an
+adjacent opponent piece to the adjacent free square behind it.
 
 On availability of multiple consecutive capturing paths on a player's
 turn it is not necessary to capture on the longest capturing path. The player
@@ -88,49 +117,73 @@ until no further capture is available on a path.
 
 ### Running Tests
 
-Tests can be started by visiting https://omerkel.github.io/Buff-and-Green/html5/test/test_buffngreen.html
+The automated tests live in the HTML5 project under `javascript/html5/src`.
+Quick path: install dependencies, run unit tests, then run E2E tests.
+From the repository root, run tests using npm's `--prefix` option:
 
-The tests cover behavior of
+```sh
+npm --prefix javascript/html5/src test
+```
 
-* the board representing the data model of Buff and Green.
-* the move generator finding valid moves for a board situation according to the implemented rules.
+Run Vitest in watch mode during development:
 
-## 3rd Party Libraries
+```sh
+npm --prefix javascript/html5/src run test:watch
+```
 
-* jQuery: MIT licensed, https://github.com/jquery/jquery
-* jQuery Mobile: MIT licensed, https://github.com/jquery/jquery-mobile
-* QUnit: MIT licensed, https://github.com/qunitjs/qunit
+Generate unit-test coverage output:
+
+```sh
+npm --prefix javascript/html5/src run test:coverage
+```
+
+Run the end-to-end browser tests with Playwright:
+
+```sh
+npm --prefix javascript/html5/src run test:e2e
+```
+
+Run the full test suite in one command:
+
+```sh
+npm --prefix javascript/html5/src run test:all
+```
+
+Playwright starts the local test server automatically on `http://localhost:4173`.
+
+Unit tests are located in `tests/unit/*.test.js` and end-to-end tests are
+located in `tests/e2e/*.spec.js`.
 
 ## Links
 
-* Association for the Advancement of Artificial Intelligence, http://www.aaai.org
-* HTML Living Standard, Web Workers, https://html.spec.whatwg.org
-* Portable Draughts Notation (PDN) 3.0 standard 1.0 documentation, http://pdn.fmjd.org
+* [Association for the Advancement of Artificial Intelligence](http://www.aaai.org)
+* [HTML Living Standard, Web Workers](https://html.spec.whatwg.org)
+* [Portable Draughts Notation (PDN) 3.0 standard 1.0 documentation](http://pdn.fmjd.org)
 
 ### Rules
 
 Mind that official tournament rules of the listed organizations differ from each other.
 Buff and Green is independent development from any work of these organizations.
 
-* Official FMJD tournament rules of International Draughts, https://fmjd.org/?p=annex
-* Official FMJD Section 64 IDF tournament rules of Draughts-64, https://fmjd64.org/rules-of-the-game
-* Official Confederação Brasileira de Jogo de Damas tournament rules of Brazilian Draughts, http://www.codexdamas.com.br/english_rules.html
-* FMJD published rules of Turkish Dama, http://www.fmjd.org/downloads/td/TD_eng.pdf
-* Official WCDF tournament rules of Draughts-64, http://www.wcdf.net/rules/rules_of_checkers_english.pdf
-* Official APCA tournament rules of American Pool, http://www.americanpoolcheckers.us/americanpoolcheckers/index.php/history/apca-tournament-rules-of-play
+* [Official FMJD tournament rules of International Draughts](https://fmjd.org/?p=annex)
+* [Official FMJD Section 64 IDF tournament rules of Draughts-64](https://fmjd64.org/rules-of-the-game)
+* [Official Confederação Brasileira de Jogo de Damas tournament rules of Brazilian Draughts](http://www.codexdamas.com.br/english_rules.html)
+* [FMJD published rules of Turkish Dama](http://www.fmjd.org/downloads/td/TD_eng.pdf)
+* [Official WCDF tournament rules of Draughts-64](http://www.wcdf.net/rules/rules_of_checkers_english.pdf)
+* [Official APCA tournament rules of American Pool](http://www.americanpoolcheckers.us/americanpoolcheckers/index.php/history/apca-tournament-rules-of-play)
 
 ### Organizations
 
 Mind that official tournament rules of the listed organizations differ from each other.
 Buff and Green is independent development from any work of these organizations.
 
-*  Fédération Mondiale du Jeu de Dames (FMJD), http://www.fmjd.org , founded in 1947
-    * [Variants listed at FMJD](http://fmjd.org/variant.php): 100 International, 64 Brazilian, 64 Checkers, 64 Czech, 64 Italian, 64 Pool, 64 Russian, 64 Spanish, 144 squares, [Turkish Dama](http://www.fmjd.org/downloads/td/TD_eng.pdf)
-* World Draughts Federation (Federation Mondiale Du Jeu De Dames) FMJD Section 64, https://fmjd64.org , accepted section in FMJD since 1984
-* The International Draughts Federation (IDF), https://fmjd64.org/idf , founded in 2012 / 2013
-* Confederação Brasileira de Jogo de Damas (CBD), http://www.codexdamas.com.br
-* World Checkers Draughts Federation (WCDF), http://www.wcdf.net
-* American Pool Checkers Association (APCA), http://americanpoolcheckers.us
+* [Fédération Mondiale du Jeu de Dames (FMJD)](http://www.fmjd.org), founded in 1947
+  * [Variants listed at FMJD](http://fmjd.org/variant.php): 100 International, 64 Brazilian, 64 Checkers, 64 Czech, 64 Italian, 64 Pool, 64 Russian, 64 Spanish, 144 squares, [Turkish Dama](http://www.fmjd.org/downloads/td/TD_eng.pdf)
+* [World Draughts Federation (Federation Mondiale Du Jeu De Dames) FMJD Section 64](https://fmjd64.org), accepted section in FMJD since 1984
+* [The International Draughts Federation (IDF)](https://fmjd64.org/idf), founded in 2012 / 2013
+* [Confederação Brasileira de Jogo de Damas (CBD)](http://www.codexdamas.com.br)
+* [World Checkers Draughts Federation (WCDF)](http://www.wcdf.net)
+* [American Pool Checkers Association (APCA)](http://americanpoolcheckers.us)
 
 ## Contributors / Authors
 

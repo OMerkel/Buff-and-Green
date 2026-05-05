@@ -1,0 +1,19 @@
+{
+  "name": "buff_and_green",
+  "version": "1.0.0",
+  "description": "Buff and Green – American Checkers browser game with MCTS UCT AI",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:all": "node scripts/run-tests-all.js"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.10",
+    "@playwright/test": "^1.52.0",
+    "@vitest/coverage-v8": "^3.0.0",
+    "vitest": "^3.0.0"
+  }
+}
