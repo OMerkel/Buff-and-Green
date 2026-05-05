@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <link rel="icon" href="img/icons/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="img/icons/buff_and_green128.png" />
+  <meta name="AUTHOR" content="Oliver Merkel" />
+  <meta name="COPYRIGHT" content="Oliver Merkel" />
+  <title>Buff and Green</title>
+  <link rel="stylesheet" href="css/index.css" />
+</head>
+<body>
+
+<div id="app">
+
+  <header id="app-header">
+    <button id="btn-menu" class="icon-btn" type="button" aria-label="Open menu" aria-controls="side-panel">
+      <img src="img/icons/icon-bars.svg" alt="" />
+    </button>
+    <span id="app-header-title">Buff and Green</span>
+    <span id="app-header-badge" aria-label="AI difficulty" aria-live="polite">R human | W human | Desktop</span>
+  </header>
+
+  <main id="app-content">
+    <section id="view-game" class="view">
+      <noscript>
+        <p>This application requires JavaScript. Please enable it in your browser settings.</p>
+      </noscript>
+      <div id="board"></div>
+    </section>
+
+    <section id="view-rules" class="view view-section" hidden>
+      <h2>Rules</h2>
+
+      <p><b>Buff and Green</b> is a two-player strategy game – American Checkers played on an 8x8 board.</p>
+
+      <details>
+        <summary>Goal</summary>
+        <div>
+          <p>Win by capturing all opposing pieces or blocking the opponent from making a legal move.</p>
+          <p>Regular pieces move diagonally forward to an adjacent green square; kings move diagonally in both directions and use long moves by default.</p>
+          <p>Play takes place on the green squares.</p>
+          <p>The board orientation uses a buff square at the bottom-right corner for each player.</p>
+          <p>Red player moves first.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Turn Sequence</summary>
+        <div>
+          <ol>
+            <li>Choose one of your movable pieces.</li>
+            <li>Move diagonally to a legal destination square, or jump an opposing piece to capture it.</li>
+            <li>If a capture is available, it must be played. Multi-jumps continue in the same turn until no further capture is possible for that piece.</li>
+            <li>If several capture paths are available, you may choose any of them; the longest path is not forced.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details>
+        <summary>Capture Options</summary>
+        <div>
+          <p>Capturing is mandatory for all pieces.</p>
+          <p>Normal unpromoted pieces capture forward and backward by default. In Options, switch off <b>Allow backward capture</b> to limit them to forward captures only.</p>
+          <p>Only one adjacent opposing piece can be captured at a time, and a captured piece is removed immediately before any continued jump is evaluated.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>King Movement and Promotion</summary>
+        <div>
+          <p>By default kings may move any distance diagonally across empty squares.</p>
+          <p>By default king captures may start after sliding across empty diagonal squares to the first opposing piece; the king then lands on the adjacent free square directly behind that piece.</p>
+          <p>In Options, switch off <b>Allow long jumps for kings</b> to limit kings to adjacent diagonal moves and adjacent captures.</p>
+          <p>A piece reaching the far side is promoted after the move finishes. During a capture chain, a checker must complete any remaining checker captures before promotion applies.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Draws and End of Game</summary>
+        <div>
+          <p>A draw is declared after 80 half-moves without a capture or a promotion.</p>
+          <p>When a game ends, open the menu and choose <b>New Game</b> to start again.</p>
+        </div>
+      </details>
+
+      <button class="btn btn-back" type="button">&#8592; Back</button>
+    </section>
+
+    <section id="view-options" class="view view-section" hidden>
+      <h2>Options</h2>
+      <p class="hint-text">Changes take effect immediately on AI turns and on new games.</p>
+      <form class="options-form" id="options-form">
+        <fieldset>
+          <legend>Red player is...</legend>
+          <label><input type="radio" name="firstplayer" value="Human" checked />Human</label>
+          <label><input type="radio" name="firstplayer" value="AI" />AI</label>
+        </fieldset>
+        <fieldset>
+          <legend>White player is...</legend>
+          <label><input type="radio" name="secondplayer" value="Human" checked />Human</label>
+          <label><input type="radio" name="secondplayer" value="AI" />AI</label>
+        </fieldset>
+        <fieldset>
+          <legend>Red AI difficulty</legend>
+          <label><input type="radio" name="difficultysouth" value="Easy" />Easy</label>
+          <label><input type="radio" name="difficultysouth" value="Medium" checked />Medium</label>
+          <label><input type="radio" name="difficultysouth" value="Hard" />Hard</label>
+        </fieldset>
+        <fieldset>
+          <legend>White AI difficulty</legend>
+          <label><input type="radio" name="difficultynorth" value="Easy" />Easy</label>
+          <label><input type="radio" name="difficultynorth" value="Medium" checked />Medium</label>
+          <label><input type="radio" name="difficultynorth" value="Hard" />Hard</label>
+        </fieldset>
+        <fieldset>
+          <legend>Normal Checker Capture</legend>
+          <label><input type="checkbox" name="allowbackwardcapture" checked />Allow backward capture</label>
+        </fieldset>
+        <fieldset>
+          <legend>King Movement</legend>
+          <label><input type="checkbox" name="allowlongkingjumps" checked />Allow long jumps for kings</label>
+        </fieldset>
+        <fieldset>
+          <legend>AI device profile</legend>
+          <label><input type="radio" name="deviceprofile" value="Auto" checked />Auto (detect)</label>
+          <label><input type="radio" name="deviceprofile" value="Desktop" />Desktop</label>
+          <label><input type="radio" name="deviceprofile" value="Mobile" />Mobile</label>
+        </fieldset>
+        <p class="hint-text" id="device-profile-hint">Auto currently resolves to Desktop.</p>
+      </form>
+      <button class="btn" id="btn-options-ok" type="button">OK</button>
+    </section>
+
+    <section id="view-about" class="view view-section" hidden>
+      <h2>About Buff and Green</h2>
+
+      <h3>Legal</h3>
+      <figure class="diagram" style="float:right;margin-left:12px;width:35%;">
+        <img src="img/oliver_checkers.jpg" alt="Oliver Merkel" />
+        <figcaption>
+          Oliver Merkel,
+          <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">cc-by-nc-nd 4.0</a>.
+        </figcaption>
+      </figure>
+      <p>
+        Copyright &copy; 2016, 2026<br />
+        <em>@author</em> Oliver Merkel, Merkel(dot)Oliver(at)web(dot)de.<br />
+        All rights reserved. Logos, brands, and trademarks belong to their respective owners.
+      </p>
+      <p>All source code (HTML, JavaScript, CSS) is released under the <strong>MIT License</strong>.</p>
+      <p>
+        Images are licensed under
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0" target="_blank">
+          Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+        </a>.
+      </p>
+
+      <details>
+        <summary>Third-party Code Licenses</summary>
+        <div>
+          <p>This version uses <strong>no third-party libraries</strong>.</p>
+          <p>The AI engine uses the UCT / MCTS algorithm.</p>
+        </div>
+      </details>
+
+      <button class="btn btn-back" type="button">&#8592; Back</button>
+    </section>
+  </main>
+
+</div>
+
+<div id="panel-overlay" hidden></div>
+
+<nav id="side-panel" aria-label="Main navigation">
+  <p class="panel-title">Buff and Green</p>
+  <ul class="panel-nav">
+    <li><button id="btn-panel-close" type="button">&#10005; Close</button></li>
+    <li class="panel-divider" aria-orientation="horizontal"></li>
+    <li><button id="nav-new" type="button">&#9654; New Game</button></li>
+    <li class="panel-divider" aria-orientation="horizontal"></li>
+    <li><button id="nav-rules" type="button">Rules&hellip;</button></li>
+    <li><button id="nav-options" type="button">Options&hellip;</button></li>
+    <li><button id="nav-about" type="button">About&hellip;</button></li>
+  </ul>
+</nav>
+
+<script type="module" src="js/hmi.js"></script>
+
+</body>
+</html>

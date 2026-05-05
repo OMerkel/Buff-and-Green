@@ -1,0 +1,23 @@
+{
+  "version": "0.7",
+  "name": "Buff and Green",
+  "description": "Buff and Green – American Checkers with MCTS UCT AI",
+  "launch_path": "/checkers/javascript/html5/src/index.html",
+  "orientation": "landscape-primary",
+  "icons": {
+    "16": "/checkers/javascript/html5/src/img/icons/buff_and_green16.png",
+    "32": "/checkers/javascript/html5/src/img/icons/buff_and_green32.png",
+    "48": "/checkers/javascript/html5/src/img/icons/buff_and_green48.png",
+    "60": "/checkers/javascript/html5/src/img/icons/buff_and_green60.png",
+    "64": "/checkers/javascript/html5/src/img/icons/buff_and_green64.png",
+    "90": "/checkers/javascript/html5/src/img/icons/buff_and_green90.png",
+    "120": "/checkers/javascript/html5/src/img/icons/buff_and_green120.png",
+    "128": "/checkers/javascript/html5/src/img/icons/buff_and_green128.png",
+    "256": "/checkers/javascript/html5/src/img/icons/buff_and_green256.png"
+  },
+  "developer": {
+    "name": "Oliver Merkel",
+    "url": "https://github.com/OMerkel"
+  },
+  "installs_allowed_from": ["*"]
+}
