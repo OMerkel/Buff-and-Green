@@ -113,6 +113,68 @@ turn it is not necessary to capture on the longest capturing path. The player
 can freely choose among given capturing paths but still has to continue capturing
 until no further capture is available on a path.
 
+## Play online
+
+* [Play Buff and Green online](https://omerkel.github.io/Buff-and-Green/javascript/html5/src/)
+
+## PWA - Progressive Web App
+
+Buff and Green is a Progressive Web App (PWA), which means you can install it on your device for a native app-like experience. The PWA includes offline support, allowing you to continue playing even without an internet connection.
+
+### Features
+
+* **Installable**: Install the app on your home screen or application menu
+* **Offline Play**: Play games offline after the app is first loaded
+* **Fast Loading**: Cached assets load quickly on repeat visits
+* **Native Look and Feel**: Runs in standalone mode without browser UI
+* **Works Across Platforms**: Install on desktop, tablet, or mobile devices
+
+### Installation Instructions
+
+#### Windows, macOS, Linux (Chrome, Edge, Brave, or Opera)
+
+1. Visit [Play Buff and Green online](https://omerkel.github.io/Buff-and-Green/javascript/html5/src/)
+2. Look for the install prompt in the address bar (if available) or click the menu icon ⋯
+3. Select **"Install app"** or **"Install Buff and Green"**
+4. Confirm the installation
+5. The app will appear on your desktop or in your applications menu
+
+Alternatively, open the browser menu and navigate to **Settings** → **Apps** → **Install this site as an app**.
+
+#### Android (Chrome, Edge, Firefox, or Samsung Internet)
+
+1. Visit [Play Buff and Green online](https://omerkel.github.io/Buff-and-Green/javascript/html5/src/)
+2. Tap the browser menu (⋯ or ⋮)
+3. Select **"Install app"** or **"Add to Home Screen"**
+4. Confirm by tapping **"Install"** or **"Add"**
+5. The app icon will appear on your home screen
+
+#### iOS (Safari)
+
+1. Visit [Play Buff and Green online](https://omerkel.github.io/Buff-and-Green/javascript/html5/src/) in Safari
+2. Tap the Share button (box with arrow ⬆)
+3. Scroll down and select **"Add to Home Screen"**
+4. Enter a name for the app (or use the default "Buff and Green")
+5. Tap **"Add"** in the top-right corner
+6. The app icon will appear on your home screen
+
+### Using Offline
+
+Once installed and loaded at least once, Buff and Green works offline:
+
+* All game assets (board, pieces, UI) are cached
+* You can start new games without an internet connection
+* Your game progress is preserved locally
+* The app will sync any changes when you reconnect
+
+### Technical Details
+
+The PWA is built with:
+
+* **Service Worker** (`sw.js`): Handles offline caching and network requests
+* **Web App Manifest** (`manifest.json`): Defines app metadata, icons, and display settings
+* **PWA Meta Tags**: Ensures cross-platform compatibility and proper app installation
+
 ## Testing
 
 ### Running Tests
