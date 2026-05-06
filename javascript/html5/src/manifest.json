@@ -4,7 +4,6 @@
   "description": "Buff and Green – American Checkers with MCTS UCT AI",
   "start_url": "./index.html",
   "display": "standalone",
-  "orientation": "landscape-primary",
   "background_color": "#ffffff",
   "theme_color": "#2c3e50",
   "scope": "./",
