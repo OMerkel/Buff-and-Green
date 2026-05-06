@@ -196,7 +196,8 @@
 
 <script>
   // Register Service Worker for PWA support
-  if ('serviceWorker' in navigator) {
+  // Service Workers require HTTPS (except localhost for development)
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
     navigator.serviceWorker.register('sw.js').then(registration => {
       console.log('Service Worker registered successfully:', registration);
     }).catch(error => {

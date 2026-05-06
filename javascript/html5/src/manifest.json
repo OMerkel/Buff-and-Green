@@ -54,7 +54,7 @@
       "src": "img/icons/buff_and_green256.png",
       "sizes": "256x256",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     }
   ],
   "categories": ["games"],
