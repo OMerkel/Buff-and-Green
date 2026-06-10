@@ -24,6 +24,10 @@ Alquerque is a medieval Spanish board game. Both, Checkers and Alquerque,
 are 2-player, abstract, strategic, perfect information,
 traditional board games.
 
+## Play Online
+
+- [Start game now...](https://omerkel.github.io/Buff-and-Green/javascript/html5/src/)
+
 ## Rules in Buff and Green
 
 ### Objective of the game
